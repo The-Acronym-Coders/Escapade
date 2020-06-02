@@ -1,0 +1,10 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/The-Acronym-Coders/Escapade/issues"
+[[mods]]
+modId="escapade"
+version="${file.version}"
+displayName="Escapade"
+authors="Lanse505"
+description='''
+'''
