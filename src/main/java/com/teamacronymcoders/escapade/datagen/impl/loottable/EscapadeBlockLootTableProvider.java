@@ -8,13 +8,12 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootParameterSet;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.LootTable.Builder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -33,6 +32,9 @@ public class EscapadeBlockLootTableProvider extends LootTableProvider {
             Pair.of(EscapadeBlockLootTables::new, LootParameterSets.BLOCK)
         );
     }
+
+    @Override
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker) {}
 
     @Override
     public String getName() {

@@ -3,6 +3,7 @@ package com.teamacronymcoders.escapade.datagen;
 import com.teamacronymcoders.escapade.Escapade;
 import com.teamacronymcoders.escapade.datagen.impl.advancement.EscapadeAdvancementProvider;
 import com.teamacronymcoders.escapade.datagen.impl.lang.EscapadeEnglishLangProvider;
+import com.teamacronymcoders.escapade.datagen.impl.lang.EscapadeSwedishLangProvider;
 import com.teamacronymcoders.escapade.datagen.impl.loottable.EscapadeBlockLootTableProvider;
 import com.teamacronymcoders.escapade.datagen.impl.loottable.EscapadeEntityLootTableProvider;
 import com.teamacronymcoders.escapade.datagen.impl.recipe.EscapadeShapedRecipeProvider;
@@ -11,7 +12,6 @@ import com.teamacronymcoders.escapade.datagen.impl.tags.EscapadeBlockTagProvider
 import com.teamacronymcoders.escapade.datagen.impl.tags.EscapadeEntityTagProvider;
 import com.teamacronymcoders.escapade.datagen.impl.tags.EscapadeItemTagProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -23,10 +23,10 @@ public class EscapadeDataProvider {
     @SubscribeEvent
     public static void gatherDataProviders(GatherDataEvent event) {
         final DataGenerator generator = event.getGenerator();
-        final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         if (event.includeClient()) {
             generator.addProvider(new EscapadeEnglishLangProvider(generator));
+            generator.addProvider(new EscapadeSwedishLangProvider(generator));
         }
 
         if (event.includeServer()) {

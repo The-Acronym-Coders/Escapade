@@ -4,17 +4,18 @@ import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import com.teamacronymcoders.escapade.Escapade;
 import com.teamacronymcoders.escapade.datagen.impl.loottable.EscapadeBlockLootTableProvider.EscapadeBlockLootTables;
+import com.teamacronymcoders.escapade.registry.EscapadeEntityRegistration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.EntityLootTables;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootParameterSet;
-import net.minecraft.world.storage.loot.LootParameterSets;
+import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.LootTable.Builder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -35,11 +36,16 @@ public class EscapadeEntityLootTableProvider extends LootTableProvider {
     }
 
     @Override
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker) {}
+
+    @Override
     public String getName() {
         return "Escapade LootTable Provider: Entity";
     }
 
     public static class EscapadeEntityLootTables extends EntityLootTables {
+        public static final ResourceLocation TREASURE_PIG = new ResourceLocation(Escapade.MODID, "entities/treasure_pig");
+
         @Override
         protected Iterable<EntityType<?>> getKnownEntities() {
             return ForgeRegistries.ENTITIES.getValues().stream()
@@ -50,8 +56,18 @@ public class EscapadeEntityLootTableProvider extends LootTableProvider {
 
         @Override
         protected void addTables() {
-
+            this.registerLootTable(EscapadeEntityRegistration.TREASURE_PIG.get(), LootTable.builder()
+                .addLootPool(new LootPool.Builder()
+                    .rolls(ConstantRange.of(1))
+                    .addEntry(AlternativesLootEntry.builder()
+                        .alternatively(TableLootEntry.builder(LootTables.CHESTS_SIMPLE_DUNGEON))
+                        .alternatively(TableLootEntry.builder(LootTables.CHESTS_ABANDONED_MINESHAFT))
+                        .alternatively(TableLootEntry.builder(LootTables.CHESTS_DESERT_PYRAMID))
+                        .alternatively(TableLootEntry.builder(LootTables.CHESTS_JUNGLE_TEMPLE))
+                        .alternatively(TableLootEntry.builder(LootTables.CHESTS_WOODLAND_MANSION))
+                    )
+                )
+            );
         }
     }
-
 }
